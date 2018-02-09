@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "GroceryStoreInputModel",
+  "type": "object",
+  "properties": {
+    "location": { "type": "string" },
+    "temperature": { "type": "number" },
+    "date": { "type": "string" }
+  }
+}

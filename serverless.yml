@@ -23,10 +23,16 @@ provider:
       Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.TableName}"
 plugins:
   - serverless-offline
+  - serverless-aws-models
 
 package:
   exclude:
     - .env
+custom: 
+  models:
+    CreateRequest:
+      ContentType: "application/json"
+      Schema: ${file(models/ObservationModel.json)}
 
 functions:
   hello:
@@ -39,6 +45,17 @@ functions:
           path: api/observations
           method: get
           cors: true
+
+  addObs:
+    handler: operations/addObs.addObs
+    events:  
+      - http:
+          path: api/observations
+          method: post
+          cors: true
+          requestModels:  
+            "application/json": "CreateRequest"
+      
 
   
 resources:
