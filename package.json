@@ -1,0 +1,10 @@
+{
+    "name": "Ronktor-Backend2018",
+    "dependencies": {
+        "aws-sdk": "^2.190.0",
+        "uuid": "^3.2.1"
+    },
+    "devDependencies": {
+        "serverless-offline": "^3.17.0"
+    }
+}
