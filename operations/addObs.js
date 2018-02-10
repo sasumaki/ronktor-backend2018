@@ -10,16 +10,30 @@ const params = {
 
 module.exports.addObs = (event, context, callback) => {
   //add an observation to table
-  console.log(JSON.parse(event.body))
   let request = JSON.parse(event.body)
+
   if (
-    !event.body ||
-    request.location === undefined ||
-    request.temperature === undefined
+    parseFloat(request.temperature) < -273.15 ||
+    parseFloat(request.temperature) > 150 ||
+    request.temperature === ''
   ) {
     callback(null, {
-      statusCode: error.statusCode || 501,
-      headers: { 'Content-Type': 'text/plain' },
+      statusCode: 501,
+      headers: {
+        'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: 'Impossible temperature.'
+    })
+    return
+  }
+  if (request.location === '') {
+    callback(null, {
+      statusCode: 501,
+      headers: {
+        'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': '*'
+      },
       body: "Couldn't create the todo item."
     })
     return
@@ -41,11 +55,15 @@ module.exports.addObs = (event, context, callback) => {
       console.error(error)
       callback(null, {
         statusCode: error.statusCode || 501,
-        headers: { 'Content-Type': 'text/plain' },
+        headers: {
+          'Content-Type': 'text/plain,',
+          'Access-Control-Allow-Origin': '*'
+        },
         body: "Couldn't create the todo item."
       })
       return
     }
+
     console.log(params)
     // create a response
     const response = {

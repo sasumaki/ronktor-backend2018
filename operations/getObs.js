@@ -22,7 +22,6 @@ module.exports.getObs = (event, context, callback) => {
       })
       return
     }
-    console.log(result)
     const response = {
       statusCode: 200,
       headers: {
