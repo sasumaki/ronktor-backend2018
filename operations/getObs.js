@@ -8,11 +8,9 @@ const params = {
 
 module.exports.getObs = (event, context, callback) => {
   //fetch all observations from db
-  console.log(dynamoDb)
-  console.log(params)
+
   dynamoDb.scan(params, (error, result) => {
     if (error) {
-      console.error(error)
       callback(null, {
         statusCode: error.statusCode,
         headers: {

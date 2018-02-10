@@ -13,7 +13,7 @@ module.exports.addObs = (event, context, callback) => {
   let request = JSON.parse(event.body)
 
   if (
-    parseFloat(request.temperature) < -273.15 ||
+    parseFloat(request.temperature) <= -273.15 ||
     parseFloat(request.temperature) > 150 ||
     request.temperature === ''
   ) {
@@ -52,7 +52,6 @@ module.exports.addObs = (event, context, callback) => {
   dynamoDb.put(params, error => {
     // handle potential errors
     if (error) {
-      console.error(error)
       callback(null, {
         statusCode: error.statusCode || 501,
         headers: {
